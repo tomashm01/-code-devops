@@ -3,7 +3,7 @@ name: CI/CD for NestJS App
 on:
   push:
     branches:
-      - main  # Cambia por la rama que desees desplegar
+      - master  # Cambia por la rama que desees desplegar
 
 jobs:
   build:
