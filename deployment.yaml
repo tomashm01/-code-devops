@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-test-deployment  # Nombre del despliegue
+spec:
+  replicas: 2  # Número de réplicas (instancias) de la aplicación
+  selector:
+    matchLabels:
+      app: nodejs-test-app  # Etiqueta para identificar los pods asociados
+  template:
+    metadata:
+      labels:
+        app: nodejs-test-app  # Etiqueta aplicada a los pods
+    spec:
+      containers:
+      - name: nodejs-test-container  # Nombre del contenedor
+        image: nodejs-test-devops  # Imagen del contenedor que se desplegará
+        ports:
+        - containerPort: 3000  # Puerto expuesto por el contenedor
+      
