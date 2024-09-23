@@ -55,6 +55,10 @@ jobs:
           EC2_KEY: ${{ secrets.EC2_KEY }}    # Clave privada SSH, almacenada en Secrets de GitHub
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
         run: |
+          # Crear el directorio .ssh si no existe
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          
           # Agregar clave privada para SSH
           echo "$EC2_KEY" > key.pem
           chmod 400 key.pem
