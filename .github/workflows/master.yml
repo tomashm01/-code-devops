@@ -32,7 +32,7 @@ jobs:
       - name: Build Docker image
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
-        run: docker build -t "${DOCKER_USER}"/devops-app:latest .
+        run: docker build -t ${DOCKER_USER}/devops-app:latest .
 
       # Paso 6: Autenticarse en Docker Hub usando DOCKER_USER y DOCKER_TOKEN
       - name: Log in to Docker Hub
@@ -45,7 +45,7 @@ jobs:
       - name: Push Docker image
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
-        run: docker push "${DOCKER_USER}"/devops-app:latest
+        run: docker push ${DOCKER_USER}/devops-app:latest
 
       # Paso 8: Desplegar en EC2
       - name: Deploy to EC2
