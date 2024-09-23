@@ -47,8 +47,7 @@ jobs:
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
         run: docker push ${DOCKER_USER}/devops-app:latest
-
-      # Paso 8: Desplegar en EC2
+      
       - name: Deploy to EC2
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}  # IP pública o DNS de tu EC2
@@ -56,9 +55,20 @@ jobs:
           EC2_KEY: ${{ secrets.EC2_KEY }}    # Clave privada SSH, almacenada en Secrets de GitHub
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
         run: |
+          # Agregar clave privada para SSH
           echo "$EC2_KEY" > key.pem
           chmod 400 key.pem
-          ssh -i key.pem $EC2_USER@$EC2_HOST "docker pull $DOCKER_USER/devops-app:latest && docker stop nestjs-container || true && docker rm nestjs-container || true && docker run -d --name nestjs-container -p 80:80 $DOCKER_USER/devops-app:latest"
+          
+          # Agregar el host de EC2 a known_hosts para evitar errores de verificación
+          ssh-keyscan -H $EC2_HOST >> ~/.ssh/known_hosts
+      
+          # Conectar por SSH y desplegar la aplicación Docker
+          ssh -i key.pem $EC2_USER@$EC2_HOST "
+            docker pull $DOCKER_USER/devops-app:latest && \
+            docker stop devops-app || true && \
+            docker rm devops-app || true && \
+            docker run -d --name devops-app -p 80:80 $DOCKER_USER/devops-app:latest"
+      
 
       # Paso 9: Limpiar archivos temporales
       - name: Clean up
