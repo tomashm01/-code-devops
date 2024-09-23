@@ -16,5 +16,5 @@ spec:
       - name: nodejs-test-container  # Nombre del contenedor
         image: nodejs-test-devops  # Imagen del contenedor que se desplegará
         ports:
-        - containerPort: 3000  # Puerto expuesto por el contenedor
+        - containerPort: 80  # Puerto expuesto por el contenedor
       
