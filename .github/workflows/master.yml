@@ -58,7 +58,7 @@ jobs:
         run: |
           echo "$EC2_KEY" > key.pem
           chmod 400 key.pem
-          ssh -i key.pem $EC2_USER@$EC2_HOST "docker pull $DOCKER_USER/devops-app:latest && docker stop nestjs-container || true && docker rm nestjs-container || true && docker run -d --name nestjs-container -p 3000:3000 $DOCKER_USER/devops-app:latest"
+          ssh -i key.pem $EC2_USER@$EC2_HOST "docker pull $DOCKER_USER/devops-app:latest && docker stop nestjs-container || true && docker rm nestjs-container || true && docker run -d --name nestjs-container -p 80:80 $DOCKER_USER/devops-app:latest"
 
       # Paso 9: Limpiar archivos temporales
       - name: Clean up
